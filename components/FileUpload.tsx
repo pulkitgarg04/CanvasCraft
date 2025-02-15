@@ -14,7 +14,6 @@ interface FileUploadProps {
 export default function FileUpload({
   onSuccess,
   onProgress,
-  fileType = "image",
 }: FileUploadProps) {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);

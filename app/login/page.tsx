@@ -2,35 +2,48 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import ReCAPTCHA from "react-google-recaptcha";
 import { Eye, EyeOff } from "lucide-react";
 
-export default function Register() {
+export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
-  const [recaptchaToken, setRecaptchaToken] = useState(null);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleRecaptchaChange = (value) => {
-    setRecaptchaToken(value);
-  };
+  interface FormData {
+    name: string;
+    username: string;
+    email: string;
+    password: string;
+  }
 
-  const handleSubmit = async (e) => {
+  interface FormElements extends HTMLFormControlsCollection {
+    name: HTMLInputElement;
+    username: HTMLInputElement;
+    email: HTMLInputElement;
+    password: HTMLInputElement;
+  }
+
+  interface RegisterFormElement extends HTMLFormElement {
+    readonly elements: FormElements;
+  }
+
+  interface FormData {
+    name: string;
+    username: string;
+    email: string;
+    password: string;
+  }
+
+  const handleSubmit = async (e: React.FormEvent<RegisterFormElement>) => {
     e.preventDefault();
 
-    if (!recaptchaToken) {
-      alert("Please complete the reCAPTCHA!");
-      return;
-    }
-
-    const formData = {
-      name: e.target.name.value,
-      username: e.target.username.value,
-      email: e.target.email.value,
-      password: e.target.password.value,
-      recaptchaToken,
+    const formData: FormData = {
+      name: e.currentTarget.elements.name.value,
+      username: e.currentTarget.elements.username.value,
+      email: e.currentTarget.elements.email.value,
+      password: e.currentTarget.elements.password.value,
     };
 
     try {
@@ -76,9 +89,37 @@ export default function Register() {
 
       <div className="w-2/3 flex flex-col justify-center px-12">
         <h2 className="text-2xl font-semibold mb-8 text-center">
-          Log in CanvasCraft
+          Signup for CanvasCraft
         </h2>
         <form onSubmit={handleSubmit} className="space-y-6 flex flex-col items-center">
+          <div className="flex gap-5 w-full justify-center">
+            <div className="flex flex-col w-1/3">
+              <label htmlFor="name" className="text-gray-600 font-semibold">
+                Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                className="border-2 border-gray-300 p-3 rounded-lg w-full"
+                placeholder="Enter your name"
+                required
+              />
+            </div>
+            <div className="flex flex-col w-1/3">
+              <label htmlFor="username" className="text-gray-600 font-semibold">
+                Username
+              </label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                className="border-2 border-gray-300 p-3 rounded-lg w-full"
+                placeholder="Enter your username"
+                required
+              />
+            </div>
+          </div>
 
           <div className="flex flex-col w-2/3">
             <label htmlFor="email" className="text-gray-600 font-semibold">
@@ -115,24 +156,25 @@ export default function Register() {
             </button>
           </div>
 
-          <ReCAPTCHA
-            sitekey="6LcNS9YqAAAAAJeyBRBxfdZHUk7XLTY24lIi5beG"
-            onChange={handleRecaptchaChange}
-            className="mt-4"
-          />
+          <div className="flex items-start gap-2 w-2/3">
+            <input type="checkbox" id="terms" className="mt-1" required />
+            <label htmlFor="terms" className="text-gray-600 text-sm">
+              I agree with CanvasCraft&apos;s Terms of Service, Privacy Policy, and Settings.
+            </label>
+          </div>
 
           <button
             type="submit"
             className="px-10 py-3 bg-gray-900 text-white font-bold rounded-full hover:bg-gray-800 transition"
           >
-            Login
+            Create Account
           </button>
         </form>
 
         <p className="mt-4 text-gray-600 text-sm text-center">
-          Don't have an account?{" "}
-          <a href="/register" className="text-blue-600 hover:underline">
-            Signup
+          Already have an account?{" "}
+          <a href="/login" className="text-blue-600 hover:underline">
+            Login
           </a>
         </p>
       </div>

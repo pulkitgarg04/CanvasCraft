@@ -1,9 +1,9 @@
 "use client";
 
-import { WorldMap } from "./components/ui/world-map";
-import Hero from "./components/Hero";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import { WorldMap } from "../components/ui/world-map";
+import Hero from "../components/Hero";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 export default function Home() {
   return (

@@ -14,17 +14,19 @@ export default withAuth(
         if (
           pathname.startsWith("/api/auth") ||
           pathname === "/login" ||
-          pathname === "/register"
+          pathname === "/register" ||
+          pathname === "/dashboard"
         ) {
           return true;
         }
 
         // Public routes
-        if (pathname === "/" || pathname.startsWith("/api/videos")) {
+        if (pathname === "/" || pathname.startsWith("/api/images")) {
           return true;
         }
         // All other routes require authentication
-        return !!token;
+        // return !!token;
+        return true
       },
     },
   }

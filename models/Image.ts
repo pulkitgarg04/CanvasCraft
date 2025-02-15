@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-export interface Video {
+export interface Image {
     _id?: mongoose.Types.ObjectId;
     title: string;
     description: string;
@@ -9,7 +9,7 @@ export interface Video {
     updatedAt?: Date;
 }
 
-const videoSchema = new mongoose.Schema<Video>(
+const imageSchema = new mongoose.Schema<Image>(
     {
         title: {
             type: String,
@@ -29,5 +29,5 @@ const videoSchema = new mongoose.Schema<Video>(
     }
 );
 
-const Video = mongoose.models?.Video || mongoose.model<Video>("Video", videoSchema);
-export default Video;
+const Image = mongoose.models?.Image || mongoose.model<Image>("Image", imageSchema);
+export default Image;

@@ -4,7 +4,18 @@ import User from "@/models/User";
 
 export async function POST(request: NextRequest) {
     try {
-        const { email, password } = await request.json()
+        const { name, username, email, password } = await request.json()
+
+        if(!name || !username) {
+            return NextResponse.json(
+                {
+                    error: "Name and Username are required"
+                },
+                {
+                    status: 400
+                }
+            )
+        }
 
         if(!email || !password) {
             return NextResponse.json(

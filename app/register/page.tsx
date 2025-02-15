@@ -2,35 +2,48 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import ReCAPTCHA from "react-google-recaptcha";
 import { Eye, EyeOff } from "lucide-react";
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
-  const [recaptchaToken, setRecaptchaToken] = useState(null);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleRecaptchaChange = (value) => {
-    setRecaptchaToken(value);
-  };
+  interface FormData {
+    name: string;
+    username: string;
+    email: string;
+    password: string;
+  }
 
-  const handleSubmit = async (e) => {
+  interface FormElements extends HTMLFormControlsCollection {
+    name: HTMLInputElement;
+    username: HTMLInputElement;
+    email: HTMLInputElement;
+    password: HTMLInputElement;
+  }
+
+  interface RegisterFormElement extends HTMLFormElement {
+    readonly elements: FormElements;
+  }
+
+  interface FormData {
+    name: string;
+    username: string;
+    email: string;
+    password: string;
+  }
+
+  const handleSubmit = async (e: React.FormEvent<RegisterFormElement>) => {
     e.preventDefault();
 
-    if (!recaptchaToken) {
-      alert("Please complete the reCAPTCHA!");
-      return;
-    }
-
-    const formData = {
-      name: e.target.name.value,
-      username: e.target.username.value,
-      email: e.target.email.value,
-      password: e.target.password.value,
-      recaptchaToken,
+    const formData: FormData = {
+      name: e.currentTarget.elements.name.value,
+      username: e.currentTarget.elements.username.value,
+      email: e.currentTarget.elements.email.value,
+      password: e.currentTarget.elements.password.value,
     };
 
     try {
@@ -146,15 +159,9 @@ export default function Register() {
           <div className="flex items-start gap-2 w-2/3">
             <input type="checkbox" id="terms" className="mt-1" required />
             <label htmlFor="terms" className="text-gray-600 text-sm">
-              I agree with CanvasCraft's Terms of Service, Privacy Policy, and Settings.
+              I agree with CanvasCraft&apos;s Terms of Service, Privacy Policy, and Settings.
             </label>
           </div>
-
-          <ReCAPTCHA
-            sitekey="6LcNS9YqAAAAAJeyBRBxfdZHUk7XLTY24lIi5beG"
-            onChange={handleRecaptchaChange}
-            className="mt-4"
-          />
 
           <button
             type="submit"
