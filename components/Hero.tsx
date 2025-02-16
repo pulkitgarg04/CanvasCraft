@@ -1,24 +1,24 @@
 "use client";
 
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Hero() {
   return (
     <div className="relative flex items-center justify-center h-screen mt-10">
-      <div className="text-center max-w-4xl">
+      <div className="relative z-10 text-center max-w-4xl">
         <h1 className="text-5xl font-extrabold text-gray-800 leading-normal">
           Discover, share, and get inspired by stunning{" "}
           <span className="text-red-500">PFPs.</span>
         </h1>
 
-        <a
-          href="/dashboard"
-          className="flex items-center gap-2 py-2 px-4 bg-gray-800 text-white rounded-full hover:bg-gray-700 mt-6 mx-auto w-fit cursor-pointer"
-        >
-          <span>Get Started</span>
-          <ArrowRight size={16} />
-        </a>
+        <Link href="/dashboard">
+          <div className="flex items-center gap-2 py-2 px-4 bg-gray-800 text-white rounded-full hover:bg-gray-700 mt-6 mx-auto w-fit cursor-pointer">
+            <span>Get Started</span>
+            <ArrowRight size={16} />
+          </div>
+        </Link>
       </div>
 
       <div className="absolute inset-0">
@@ -91,7 +91,7 @@ export default function Hero() {
             className="rounded-lg shadow-lg"
           />
         </div>
-       
+
         <div className="absolute right-1/3 transform">
           <Image
             src="https://i.pinimg.com/236x/85/74/e8/8574e88ff1c57bf62b6a9b0c76ec1d93.jpg"

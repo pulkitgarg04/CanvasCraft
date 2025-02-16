@@ -5,32 +5,16 @@ import User from "@/models/User";
 export async function POST(request: NextRequest) {
     try {
         const { name, username, email, password } = await request.json()
-
-        if(!name || !username) {
+        
+        if (!name || !username || !email || !password) {
             return NextResponse.json(
-                {
-                    error: "Name and Username are required"
-                },
-                {
-                    status: 400
-                }
-            )
-        }
-
-        if(!email || !password) {
-            return NextResponse.json(
-                {
-                    error: "Email and password are required"
-                },
-                {
-                    status: 400
-                }
-            )
-        }
-
+              { error: "All fields are required" },
+              { status: 400 }
+            );
+          }
+        
         await connectToDatabase();
-
-        // Check if the user alreasy exists
+        
         const existingUser = await User.findOne({ email });
         if(existingUser) {
             return NextResponse.json(
@@ -44,9 +28,13 @@ export async function POST(request: NextRequest) {
         }
 
         await User.create({
+            name,
+            username,
             email,
             password
         });
+
+        console.log("User created sucessfully!");
 
         return NextResponse.json(
             {
