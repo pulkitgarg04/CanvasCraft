@@ -2,13 +2,15 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { redirect } from 'next/navigation'
+import Link from "next/link";
+import { useRouter } from 'next/navigation'
 import { Eye, EyeOff } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -44,7 +46,7 @@ export default function Register() {
       if (response.ok) {
         toast.success("Account created successfully!");
         setTimeout(() => {
-          redirect('/dashboard');
+          router.push('/login');
         }, 2000);
 
       } else {
@@ -168,9 +170,11 @@ export default function Register() {
 
         <p className="mt-4 text-gray-600 text-sm text-center">
           Already have an account?{" "}
-          <a href="/login" className="text-blue-600 hover:underline">
+          <Link href="/login">
+          <span className="text-blue-600 hover:underline">
             Login
-          </a>
+            </span>
+          </Link>
         </p>
       </div>
     </div>

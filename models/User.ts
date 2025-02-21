@@ -2,47 +2,51 @@ import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
 export interface User {
-    name: string;
-    username: string;
-    email: string;
-    password: string;
-    _id?: mongoose.Types.ObjectId;
-    createdAt?: Date;
-    updatedAt?: Date;
+  firstName: string;
+  lastName: string;
+  username: string;
+  email: string;
+  password: string;
+  _id?: mongoose.Types.ObjectId;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 const userSchema = new mongoose.Schema<User>(
-    {
-        name: {
-            type: String,
-            required: true
-        },
-        username: {
-            type: String,
-            required: true,
-            unique: true
-        },
-        email: {
-            type: String,
-            required: true,
-            unique: true
-        },
-        password: {
-            type: String,
-            required: true
-        }
+  {
+    firstName: {
+      type: String,
     },
-    {
-        timestamps: true
-    }
+    lastName: {
+      type: String,
+    },
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+      select: false,
+    },
+  },
+  {
+    timestamps: true,
+  }
 );
 
 userSchema.pre("save", async function (next) {
-    if(this.isModified("password")) {
-        this.password = await bcrypt.hash(this.password, 10)
-    }
+  if (this.isModified("password")) {
+    this.password = await bcrypt.hash(this.password, 10);
+  }
 
-    next();
+  next();
 });
 
 // Use the User model if it already exists in the database or refer to the new model

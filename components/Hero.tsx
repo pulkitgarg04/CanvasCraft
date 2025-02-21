@@ -3,6 +3,7 @@
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 
 export default function Hero() {
   return (
@@ -13,12 +14,29 @@ export default function Hero() {
           <span className="text-red-500">PFPs.</span>
         </h1>
 
-        <Link href="/dashboard">
-          <div className="flex items-center gap-2 py-2 px-4 bg-gray-800 text-white rounded-full hover:bg-gray-700 mt-6 mx-auto w-fit cursor-pointer">
-            <span>Get Started</span>
-            <ArrowRight size={16} />
-          </div>
-        </Link>
+        <SignedOut>
+          <Link href="/sign-in">
+            <div
+              className="flex items-center gap-2 py-2 px-4 bg-gray-800 text-white rounded-full hover:bg-gray-700 mt-6 mx-auto w-fit cursor-pointer"
+              aria-label="Get Started"
+            >
+              <span>Get Started</span>
+              <ArrowRight size={16} />
+            </div>
+          </Link>
+        </SignedOut>
+
+        <SignedIn>
+          <Link href="/dashboard">
+            <div
+              className="flex items-center gap-2 py-2 px-4 bg-gray-800 text-white rounded-full hover:bg-gray-700 mt-6 mx-auto w-fit cursor-pointer"
+              aria-label="Dashboard"
+            >
+              <span>Dashboard</span>
+              <ArrowRight size={16} />
+            </div>
+          </Link>
+        </SignedIn>
       </div>
 
       <div className="absolute inset-0">

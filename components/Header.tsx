@@ -1,13 +1,14 @@
-import React from 'react';
-import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import React from "react";
+import Link from "next/link";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { ArrowRight } from "lucide-react";
 
 export default function Header() {
   const navItems = [
-    { name: 'Home', path: '/' },
-    { name: 'Features', path: '/features' },
-    { name: 'Pricing', path: '/pricing' },
-    { name: 'FAQs', path: '/faqs' },
+    { name: "Home", path: "/" },
+    { name: "Features", path: "/features" },
+    { name: "Pricing", path: "/pricing" },
+    { name: "FAQs", path: "/faqs" },
   ];
 
   return (
@@ -28,16 +29,17 @@ export default function Header() {
         ))}
       </ul>
       <div className="flex items-center gap-4">
-        <Link href="/login" className="text-gray-800 hover:text-gray-800">
-          Sign in
-        </Link>
-        <Link
-          href="/register"
-          className="flex items-center gap-2 py-2 px-4 bg-gray-800 text-white rounded-full hover:bg-gray-700"
-        >
-          <span>Sign up</span>
-          <ArrowRight size={16} />
-        </Link>
+        <SignedOut>
+          <SignInButton>
+            <button className="flex items-center gap-2 py-2 px-4 bg-gray-800 text-white rounded-full hover:bg-gray-700 mx-auto w-fit">
+              <span>Sign In</span>
+              <ArrowRight size={16} />
+            </button>
+          </SignInButton>
+        </SignedOut>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
       </div>
     </div>
   );

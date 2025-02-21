@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Page() {
   const images = [
@@ -55,14 +56,16 @@ export default function Page() {
                 key={index}
                 className="relative group cursor-pointer rounded-lg overflow-hidden shadow-lg"
               >
-                <Image
-                  src={src}
-                  alt={`Profile Picture ${index + 1}`}
-                  width={200}
-                  height={200}
-                  className="rounded-lg transition-transform duration-200 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-25 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
+                <Link href="/pulkitgarg04/egerg">
+                  <Image
+                    src={src}
+                    alt={`Profile Picture ${index + 1}`}
+                    width={200}
+                    height={200}
+                    className="rounded-lg transition-transform duration-200 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-25 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
+                </Link>
               </div>
             ))}
           </div>
