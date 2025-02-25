@@ -1,23 +1,24 @@
-"use server"
+"use server";
 
-import UserModel from "@/models/user.model";
+import User from "@/models/user.model";
 import { connectToDatabase } from "@/lib/db";
-import { User } from "@/models/user.model";
+import { User as UserInterface } from "@/models/user.model";
 
-export async function createUser(user: User) {
+export async function createUser(user: Omit<UserInterface, "_id" | "createdAt" | "updatedAt">) {
   try {
     await connectToDatabase();
-    const newUser = await UserModel.create(user);
+    const newUser = await User.create(user);
     return JSON.parse(JSON.stringify(newUser));
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    throw new Error("Failed to create user");
   }
 }
 
-export async function updateUser(clerkId: string, updatedData: Partial<User>) {
+export async function updateUser(clerkId: string, updatedData: Partial<UserInterface>) {
   try {
     await connectToDatabase();
-    const user = await UserModel.findOneAndUpdate(
+    const user = await User.findOneAndUpdate(
       { clerkId },
       { $set: updatedData },
       { new: true }
@@ -32,7 +33,7 @@ export async function updateUser(clerkId: string, updatedData: Partial<User>) {
 export async function deleteUser(clerkId: string) {
   try {
     await connectToDatabase();
-    const result = await UserModel.findOneAndDelete({ clerkId });
+    const result = await User.findOneAndDelete({ clerkId });
     return JSON.parse(JSON.stringify(result));
   } catch (error) {
     console.error(error);
