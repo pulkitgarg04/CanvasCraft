@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
-import bcrypt from "bcryptjs";
 
 export interface User {
+  clerkId: string;
   firstName: string;
   lastName: string;
   username: string;
   email: string;
-  password: string;
+  photo: string;
   _id?: mongoose.Types.ObjectId;
   createdAt?: Date;
   updatedAt?: Date;
@@ -14,6 +14,11 @@ export interface User {
 
 const userSchema = new mongoose.Schema<User>(
   {
+    clerkId: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     firstName: {
       type: String,
     },
@@ -30,24 +35,14 @@ const userSchema = new mongoose.Schema<User>(
       required: true,
       unique: true,
     },
-    password: {
+    photo: {
       type: String,
-      required: true,
-      select: false,
     },
   },
   {
     timestamps: true,
   }
 );
-
-userSchema.pre("save", async function (next) {
-  if (this.isModified("password")) {
-    this.password = await bcrypt.hash(this.password, 10);
-  }
-
-  next();
-});
 
 // Use the User model if it already exists in the database or refer to the new model
 const User = mongoose.models?.User || mongoose.model<User>("User", userSchema);

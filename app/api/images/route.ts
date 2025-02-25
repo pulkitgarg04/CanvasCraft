@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { connectToDatabase } from "@/lib/db";
-import Image from "@/models/Image";
-import type { Image as ImageType } from "@/models/Image";
+import Image from "@/models/image.model";
+import type { Image as ImageType } from "@/models/image.model";
 
 export async function GET() {
   try {

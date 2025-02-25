@@ -1,6 +1,6 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
-import { ClerkProvider } from "@clerk/nextjs";
+import { ClerkProvider, ClerkLoaded, ClerkLoading } from "@clerk/nextjs";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +18,14 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={inter.className}>
-          <main className="container mx-auto">{children}</main>
+          <ClerkLoading>
+            <div className="flex items-center justify-center h-screen text-2xl">
+              LOADING...
+            </div>
+          </ClerkLoading>
+          <ClerkLoaded>
+            <main className="container mx-auto">{children}</main>
+          </ClerkLoaded>
         </body>
       </html>
     </ClerkProvider>
